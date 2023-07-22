@@ -1,0 +1,12 @@
+{
+  "name": "TravelApp",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "nodemon back-end/server.js",
+    "client": "cd front-end && npm start"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}
