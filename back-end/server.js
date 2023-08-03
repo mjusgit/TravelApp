@@ -1,14 +1,14 @@
 
 const express = require("express");
-const app = express();
-const port = ({}).PORT || 5000;
-
-app.listen(port, () => {
-  console.log("Server is running on " + port);
-});
-
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const app = express();
+const port = process.env.PORT || 5000;
+app.use(cors({
+  origin: "http://localhost:3000",
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 
 app.use(bodyParser.json());
 app.use(
@@ -16,37 +16,19 @@ app.use(
     extended: true
   })
 );
-app.use(cors());
 
+app.use('/login', require('./routes/login'));
+app.use('/register',  require('./routes/register'));
+app.use('/cities', require('./routes/cities'));
+app.use('/itineraries', require('./routes/itineraries'));
 
+app.listen(port, () => {
+  console.log("Server is running on " + port);
+});
 
-/*const { MongoClient } = require('mongodb')
+const db = require('./actions/key.js').mongoURL; 
+const mongoose = require("mongoose");
 
-
-
-let dbConnection;
-
-module.exports = {
-  connectToDB: (cb) => {
-    MongoClient.connect('mongodb://localhost27107/cities')
-    .then((client)=>{
-      dbConnection = client.db()
-      return cb()
-    })
-    .catch((err) =>{
-      console.log(err)
-      return cb(err)
-    })
-  },
-  getDb: () => {dbConnection}
-
-}
-
-const express = require ('express')
-const mongoose = require('mongoose');
-
-const app = express()
-
-app.listen(3000,()=>{
-  console.log('on port 3000')
-})*/
+mongoose.connect(db, { useNewUrlParser: true, dbName: 'Maps'})
+  .then(() => console.log('Connection to Mongo DB established'))
+  .catch(err => console.log(err));
