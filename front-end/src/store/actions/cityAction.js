@@ -1,5 +1,4 @@
 import axios from 'axios';
-// actions/cityActions.js
 
 export const fetchCitiesLoading = () => {
   return {
@@ -23,11 +22,14 @@ export const fetchCitiesFailure = (error) => {
 
 
 
-export const fetchCitiesData = () => async (dispatch) => {
-  try {
-    dispatch(fetchCitiesLoading());
-    
-    const response = await axios.get('http://localhost:5000/cities/all');
+export const fetchCitiesData = (selectedCity, selectedCountry) => async (dispatch) =>  {
+ dispatch(fetchCitiesLoading()); 
+ try {
+     let url = 'http://localhost:5000/cities/all';
+      if (selectedCity && selectedCountry) {
+        url += `?city=${selectedCity}&country=${selectedCountry}`;
+      }
+    const response = await axios.get(url);
     const data = response.data;
     console.log('Fetched data:', data);
 

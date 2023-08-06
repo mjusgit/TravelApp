@@ -21,7 +21,7 @@ router.get('/itineraries/city/:cityId', async (req, res) => {
     console.log('City ID:', cityId);
     const itineraries = await ItineraryModel.find({ id : cityId });
   
-    res.send(itineraries); // Send the itineraries as the response
+    res.send(itineraries);
     console.log(itineraries)
     console.log(cityId)
   } catch (error) {

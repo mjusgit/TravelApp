@@ -59,10 +59,11 @@ const CityForm = () => {
   );
 };
 
-const CityFilter = () => {
+const CityFilter =({ onCitySelect }) => {
   const [inputValue, setInputValue] = useState('');
   const [allOptions, setAllOptions] = useState([]);
   const [filteredOptions, setFilteredOptions] = useState([]);
+  
 
   useEffect(() => {
     const fetchCities = async () => {
@@ -72,7 +73,7 @@ const CityFilter = () => {
           value: city.name,
           label: `${city.name}, ${city.country}`,
           type: 'city',
-          country: city.country, // Store country separately for easy access later
+          country: city.country, 
         }));
         setAllOptions(options);
       } catch (error) {
@@ -102,13 +103,10 @@ const CityFilter = () => {
   };
 
   const handleOptionSelect = (selectedOption) => {
-    // Extract the city and country from the label
-    const [city, country] = selectedOption.label.split(', ');
-    console.log('Selected City:', city);
-    console.log('Selected Country:', country);
-
-    // Do whatever you want with the city and country
-    // For example, you can pass them to another component or use them in your application's state.
+    if (selectedOption) {
+      const [city, country] = selectedOption.label.split(', ');
+      onCitySelect(city, country);
+    }
   };
 
   return (
@@ -127,10 +125,13 @@ const CityFilter = () => {
 
 const Cities = (props) => {
   const { isLoading, error, data, fetchCitiesData } = props;
+  const [selectedCity, setSelectedCity] = useState('');
+  const [selectedCountry, setSelectedCountry] = useState('');
 
   useEffect(() => {
-    fetchCitiesData();
-  }, [fetchCitiesData]);
+    fetchCitiesData(selectedCity, selectedCountry);
+  }, [fetchCitiesData, selectedCity, selectedCountry]);
+
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -139,12 +140,14 @@ const Cities = (props) => {
   if (error) {
     return <div>Error: {error}</div>;
   }
-  console.log(data)
- console.log(isLoading)
+  const handleCitySelect = (city, country) => {
+    setSelectedCity(city);
+    setSelectedCountry(country);
+  };
 
   return (
     <div>
-      <CityFilter />
+      <CityFilter onCitySelect={handleCitySelect} />
       {data.map((city) => (
         <Link key={city._id} to={`/city/${city._id}`}>
         <div key={city._id} className="bg-red-500 text-white rounded-lg p-4 shadow-md m-8">

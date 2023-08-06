@@ -15,8 +15,8 @@ router.get('/all', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  console.log('Request Body:', req); // Add this line to see the request body
-  const newCity = new City({
+  console.log('Request Body:', req); 
+  const newCity = new CityModel({
     name: req.body.name,
     country: req.body.country
   });
@@ -25,7 +25,7 @@ router.post('/', (req, res) => {
 
   newCity.save()
     .then((city) => {
-      console.log('City saved:', city); // Add this line to see the saved city
+      console.log('City saved:', city); 
       res.send(city);
     })
     .catch(err => {

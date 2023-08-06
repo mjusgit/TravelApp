@@ -4,9 +4,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Landing } from '../components/Landing';
 import { QueryClient } from "react-query";
 import  {QueryClientProvider} from 'react-query';
-import { LogInForm } from '../components/logIn';
-import { SignUpForm } from '../components/signUp';
-import  Cities  from '../components/Cities';
+import { LogInForm } from '../components/LogIn';
+import { SignUpForm } from '../components/SignUp';
+import  Cities  from '../components/Cities';//vscode-app/c:/Users/Julia/AppData/Local/Programs/Microsoft%20VS%20Code/resources/app/out/vs/code/electron-sandbox/workbench/workbench.html
 import CityItineraryPage from "../components/CityItineraryPage";
 import {Navbar} from '../components/NavBar';
 import {Account} from "../components/Account";

@@ -1,4 +1,3 @@
-// reducers/cityReducer.js
 
 const initialState = {
   isLoading: false,

@@ -1,28 +1,36 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
+const bcrypt = require("bcryptjs");
 
-const UserModel = require('./models/userModel')
+const UserModel = require("./models/userModel");
 
-// Create a route to handle user registration
-router.post('/', async (req, res) => {
+router.post('/',async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { name, email, password } = req.body;
+    const user = await UserModel.findOne({ email });
 
-    // Check if the user already exists
-    const existingUser = await UserModel.findOne({ email });
-    if (existingUser) {
-      return res.status(409).json({ error: 'User already exists' });
+    if (user) {
+      return res.json({ error: "Email already registered!" });
+    } else if (!name || !email || !password) {
+      return res.json({ error: "You must fill all fields" });
+    } else {
+      const hashedPassword = bcrypt.hashSync(password, 10);
+
+      const newUser = new UserModel({
+        name,
+        email,
+        password: hashedPassword,
+      });
+      await newUser.save();
+      console.log('Response:', { message: "New user created", user: newUser });
+
+      return res.json({ message: "New user created", user: newUser });
     }
-
-    // Create a new user
-    const newUser = new UserModel({ email, password });
-    await newUser.save();
-
-    return res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
-    console.error('Error registering user:', error);
-    return res.status(500).json({ error: 'Server error' });
+    console.error("Error registering user:", error);
+    return res.status(500).json({ error: "Server error" });
   }
-});
+})
+
 
 module.exports = router;

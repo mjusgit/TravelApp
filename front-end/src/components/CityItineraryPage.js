@@ -48,7 +48,6 @@ const CityItineraryPage = () => {
               </div>
             ))}
           </div>
-          {/* Display other itinerary information as needed */}
         </div>
       ))}
     </div>

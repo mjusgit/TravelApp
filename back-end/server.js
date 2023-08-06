@@ -16,8 +16,9 @@ app.use(
     extended: true
   })
 );
-
+app.use('/user', require('./routes/user'));
 app.use('/login', require('./routes/login'));
+app.use('/user', require('./routes/updatePassword'));
 app.use('/register',  require('./routes/register'));
 app.use('/cities', require('./routes/cities'));
 app.use('/itineraries', require('./routes/itineraries'));
