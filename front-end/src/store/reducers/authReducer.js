@@ -3,7 +3,7 @@ import { LOGIN_SUCCESS, LOGOUT_SUCCESS } from "../actions/authAction";
 
 const initialState = {
   isLoggedIn: false,
-  user: null,
+  user: [],
 };
 
 const authReducer = (state = initialState, action) => {
