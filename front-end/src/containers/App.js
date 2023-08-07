@@ -6,9 +6,10 @@ import { QueryClient } from "react-query";
 import  {QueryClientProvider} from 'react-query';
 import { LogInForm } from '../components/LogIn';
 import { SignUpForm } from '../components/SignUp';
-import  Cities  from '../components/Cities';//vscode-app/c:/Users/Julia/AppData/Local/Programs/Microsoft%20VS%20Code/resources/app/out/vs/code/electron-sandbox/workbench/workbench.html
+import  Cities  from '../components/Cities';
 import CityItineraryPage from "../components/CityItineraryPage";
 import {Navbar} from '../components/NavBar';
+import {Footer} from '../components/Footer';
 import {Account} from "../components/Account";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ function App() {
         <Route path="/city/:cityId" element={<CityItineraryPage />} />
         <Route path='/account' element={<Account />} />
       </Routes>
+      <Footer />
     </Router>
      
     </QueryClientProvider>

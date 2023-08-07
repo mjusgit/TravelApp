@@ -7,20 +7,34 @@ import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import rootReducer from "./store/reducers/rootReducer";
+import { loginSuccess } from './store/actions/authAction';
 
 
-
-const store = createStore (
+const persistedUser = JSON.parse(localStorage.getItem("user"));
+const store = createStore(
   rootReducer,
+  {
+    auth: {
+      isLoggedIn: !!persistedUser,
+      user: persistedUser || null,
+    },
+  },
   composeWithDevTools(applyMiddleware(thunk))
 );
 
+store.subscribe(() => {
+ 
+const { auth } = store.getState();
+  localStorage.setItem("user", JSON.stringify(auth.user));
+});
+
 ReactDOM.render(
-  <Provider store={store}>
+  
+ 
+<Provider store={store}>
     <App />
   </Provider>,
   document.getElementById("root")
-); 
-
+);
 
 reportWebVitals();

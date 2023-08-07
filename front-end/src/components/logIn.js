@@ -3,8 +3,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../store/actions/authAction';
 import { useNavigate } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'; 
+
 
 
 export const LogInForm = () => {
@@ -25,6 +24,8 @@ export const LogInForm = () => {
       setEmail('');
       setPassword('');
       navigate('/account');
+
+      localStorage.setItem('userToken', response.data.token);
     } catch (error) {
       
       setMessage(error.response.data.error);
